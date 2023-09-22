@@ -25,14 +25,14 @@ export const styles = StyleSheet.create({
    buttonOut: {
       width: 65,
       height: 40,
-      backgroundColor: "#DDD",
+      backgroundColor: "#3B5368",
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 5
    },
    buttonText: {
-      color: "#020E17",
+      color: "#ddd",
       fontSize: 20,
       fontWeight: 'bold'
    }

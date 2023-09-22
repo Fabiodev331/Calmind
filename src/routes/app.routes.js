@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "../pages/Home";
-import Video from "../pages/Video";
+import Video01 from "../pages/Video01";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,8 +16,8 @@ export default function AppRoutes(){
          />
          
          <Stack.Screen 
-         name="Video" 
-         component={Video} 
+         name="Video01" 
+         component={Video01} 
          options={{title: 'Mente',
          headerStyle: {
             backgroundColor: "#3B5368"

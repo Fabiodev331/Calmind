@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
       height: 100,
    },
    nome: {
-      color: "#FFF",
+      color: "#ddd",
       fontSize: 23,
       fontWeight: "bold",
       marginBottom: 5,

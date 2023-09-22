@@ -7,6 +7,8 @@ import { firebaseConfig } from "../services/firebaseConnection";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { collection, addDoc, getDocs } from "firebase/firestore"; 
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getApp } from "firebase/app";
 
 export const AuthContext = createContext({});
 
@@ -19,21 +21,24 @@ export default function AuthProvider({ children }){
    const app = initializeApp(firebaseConfig);
    const auth = getAuth(app);
    const db = getFirestore(app);
+   const firebaseApp = getApp();
 
    useEffect(()=> {
       async function loadStorage(){
          const storageUser = await AsyncStorage.getItem('@calmind');
 
          if(storageUser){
-            setUser(JSON.parse(storageUser));
-            setLoading(false);
+         setUser(JSON.parse(storageUser));
+         setNameUser(user?.name) 
+         setLoading(false); 
          }
-         setLoading(false);
+
+         setLoading(false); 
       }
       loadStorage();
-   },[])
-
-   async function signUp(email, password, name){
+   },[user])
+ 
+   async function signUp(email, password, name){ 
       setLoadingAuth(true);
       await createUserWithEmailAndPassword(auth, email, password)
       .then( async (value) => {
@@ -41,6 +46,7 @@ export default function AuthProvider({ children }){
          //console.log('criada')
 
          try {  await addDoc(collection(db, "users"), {
+            uid: uid,
             name: name,
             email: email,
           });
@@ -49,9 +55,9 @@ export default function AuthProvider({ children }){
             console.log(error)
          }
          let data = {
-            uid: uid,
+            email: value.user.email,
             name: name,
-            email: value.user.email
+            uid: uid,
          }
          setUser(data);
          storageUser(data);
@@ -74,17 +80,14 @@ export default function AuthProvider({ children }){
          querySnapshot.forEach((doc) => {
             
             if(doc.data().email === user.email ){
+               setUser(doc.data())
+               storageUser(doc.data())
                setNameUser(doc.data().name)
             }
-         });
 
-         let data = {
-            uid: value.user.uid,
-            email: value.user.email
-         }
-         setUser(data);
-         storageUser(data);
-         setLoadingAuth(false);
+            setLoadingAuth(false);
+         }); 
+
       })
       .catch((error) => {
          console.log(error)
@@ -92,8 +95,8 @@ export default function AuthProvider({ children }){
       })
    }
    async function SignOut(){
-      await signOut(auth);
-      await AsyncStorage.clear()
+      await AsyncStorage.clear();
+      await signOut(auth)
       .then(() => {
          setUser(null);
       })
@@ -103,8 +106,23 @@ export default function AuthProvider({ children }){
       await AsyncStorage.setItem('@calmind', JSON.stringify(data))
    }
 
+   async function handleFirebaseStorage(){
+      const storage = getStorage(firebaseApp, "gs://calmind-b31b7.appspot.com/");
+      console.log(storage)
+   }
+
    return(
-      <AuthContext.Provider value={{ signed: !!user, signUp, signIn, SignOut, loadingAuth, loading, nameUser }}>
+      <AuthContext.Provider 
+      value={{ 
+         signed: !!user, 
+         signUp, 
+         signIn, 
+         SignOut, 
+         loadingAuth, 
+         loading, 
+         nameUser,
+         handleFirebaseStorage
+      }}>
          {children}
       </AuthContext.Provider>
    )

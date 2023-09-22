@@ -12,7 +12,7 @@ export default function ContainerList(){
 
    return(
       <ScrollView>
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Video')}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Video01')}>
          <LinearGradient 
          style={styles.container}
          colors={["#3B5368", "#020E17"]}
@@ -22,7 +22,7 @@ export default function ContainerList(){
             <Text style={styles.nome}>
                Mente
             </Text>
-            <FontAwesome name="car" color="#FFF" size={55} />
+            <FontAwesome name="car" color="#020E17" size={55} />
             
          </LinearGradient>
       </TouchableOpacity>
@@ -36,7 +36,7 @@ export default function ContainerList(){
             <Text style={styles.nome}>
                Relaxar
             </Text>
-            <FontAwesome name="compress" color="#FFF" size={55} />
+            <FontAwesome name="compress" color="#020E17" size={55} />
             
          </LinearGradient>
       </TouchableOpacity>
@@ -50,7 +50,7 @@ export default function ContainerList(){
             <Text style={styles.nome}>
                Descanso
             </Text>
-            <FontAwesome name="bed" color="#FFF" size={55} />
+            <FontAwesome name="bed" color="#020E17" size={55} />
             
          </LinearGradient>
       </TouchableOpacity>
@@ -64,7 +64,7 @@ export default function ContainerList(){
             <Text style={styles.nome}>
                Foco
             </Text>
-            <FontAwesome name="rocket" color="#FFF" size={55} />
+            <FontAwesome name="rocket" color="#020E17" size={55} />
             
          </LinearGradient>
       </TouchableOpacity>
@@ -78,7 +78,7 @@ export default function ContainerList(){
             <Text style={styles.nome}>
                Corpo
             </Text>
-            <FontAwesome name="male" color="#FFF" size={55} />
+            <FontAwesome name="male" color="#020E17" size={55} />
             
          </LinearGradient>
       </TouchableOpacity>
