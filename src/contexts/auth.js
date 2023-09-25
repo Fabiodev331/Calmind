@@ -16,7 +16,6 @@ export default function AuthProvider({ children }){
    const [user, setUser] = useState(null);
    const [loadingAuth, setLoadingAuth] = useState(false);
    const [loading, setLoading] = useState(true);
-   const [nameUser, setNameUser] = useState('');
 
    const app = initializeApp(firebaseConfig);
    const auth = getAuth(app);
@@ -29,7 +28,6 @@ export default function AuthProvider({ children }){
 
          if(storageUser){
          setUser(JSON.parse(storageUser));
-         setNameUser(user?.name) 
          setLoading(false); 
          }
 
@@ -61,7 +59,6 @@ export default function AuthProvider({ children }){
          }
          setUser(data);
          storageUser(data);
-         setNameUser(data.name);
          setLoadingAuth(false);
       })
       .catch((error) => {
@@ -82,7 +79,6 @@ export default function AuthProvider({ children }){
             if(doc.data().email === user.email ){
                setUser(doc.data())
                storageUser(doc.data())
-               setNameUser(doc.data().name)
             }
 
             setLoadingAuth(false);
@@ -120,7 +116,7 @@ export default function AuthProvider({ children }){
          SignOut, 
          loadingAuth, 
          loading, 
-         nameUser,
+         user,
          handleFirebaseStorage
       }}>
          {children}

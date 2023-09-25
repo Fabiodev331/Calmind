@@ -23,7 +23,4 @@ export const styles = StyleSheet.create({
       marginBottom: 5,
       marginLeft: 5
    },
-   flex: {
-
-   }
 })

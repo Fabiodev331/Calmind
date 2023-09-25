@@ -6,9 +6,11 @@ import Header from "../../components/Header";
 import ContainerList from "../../components/ContainerList";
 
 import { AuthContext } from "../../contexts/auth";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Home(){
-   const {SignOut, nameUser} = useContext(AuthContext);
+   const {SignOut, user} = useContext(AuthContext);
+   const navigation = useNavigation();
 
    const [posts, setPosts] = useState ([
       {id: 1, name: "Mente"},
@@ -18,17 +20,14 @@ export default function Home(){
       {id: 5, name: "Silêncio"},
    ])
 
-   async function handleSignOut(){
-      await SignOut();
-   }
    return(
       <View style={styles.container}>
          <Header/>
          <View style={styles.top}>
-            <Text style={styles.text}>Olá {nameUser} </Text>
+            <Text style={styles.text}>Olá {user?.name} </Text>
 
-            <TouchableOpacity style={styles.buttonOut} onPress={handleSignOut}>
-               <Text style={styles.buttonText}>Sair</Text>
+            <TouchableOpacity style={styles.buttonProfile} onPress={() => navigation.navigate('Profile')}>
+               <Text style={styles.buttonText}>Perfil</Text>
             </TouchableOpacity>
          </View>
         

@@ -22,8 +22,8 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
       marginBottom: 10
    },
-   buttonOut: {
-      width: 65,
+   buttonProfile: {
+      width: 75,
       height: 40,
       backgroundColor: "#3B5368",
       display: 'flex',
