@@ -4,6 +4,7 @@ import { styles } from "./styles";
 
 import { Feather } from "@expo/vector-icons";
 import { AuthContext } from "../../contexts/auth";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function Login(){
@@ -12,6 +13,7 @@ export default function Login(){
    const [password, setPassword] = useState('');
    const [visible, setVisible] = useState(false);
    const [login, setLogin] = useState(true);
+   const navigation = useNavigation();
 
    const {signUp, signIn, loadingAuth} = useContext(AuthContext)
 
@@ -53,6 +55,7 @@ export default function Login(){
                placeholder="Email"
                placeholderTextColor="#3B5368"
                style={styles.input}
+               autoCapitalize="none"
             />
             <View style={styles.containerInputPassword}>
                <TextInput
@@ -72,7 +75,7 @@ export default function Login(){
                }
                </TouchableOpacity>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ReplacePass')}>
                <Text style={styles.text}>Esqueceu a senha?</Text>
             </TouchableOpacity>
    
@@ -113,6 +116,7 @@ export default function Login(){
             placeholder="Email"
             placeholderTextColor="#3B5368"
             style={styles.input}
+            autoCapitalize="none"
          />
          <View style={styles.containerInputPassword}>
             <TextInput
