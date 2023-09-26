@@ -22,6 +22,12 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
       marginBottom: 10
    },
+   containerButton: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center'
+   },
    buttonProfile: {
       width: 75,
       height: 40,
@@ -29,12 +35,18 @@ export const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 5
+      borderRadius: 5,
+      marginLeft: 15
    },
    buttonText: {
       color: "#ddd",
       fontSize: 20,
       fontWeight: 'bold'
+   },
+   containerIcon: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
    }
 
 })

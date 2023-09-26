@@ -32,7 +32,7 @@ export default function ReplacePass(){
       }
       sendPasswordResetEmail(auth, userEmail)
       .then(()=> {
-         alert("email enviado para: " + userEmail + "verifique seu email");
+         alert("Email enviado para: " + userEmail + " verifique seu email");
          navigation.navigate('Login');
       })
       .catch((error)=> {
