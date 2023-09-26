@@ -27,6 +27,19 @@ export const styles = StyleSheet.create({
       color: "#3B5368",
       marginBottom: 20
    },
+   inputEmail: {
+      width: "80%",
+      height: 50,
+      fontSize: 18,
+      borderWidth: 1,
+      borderColor: "#3B5368",
+      backgroundColor: "#ddd",
+      borderRadius: 5,
+      padding: 10,
+      color: "#020E17",
+      marginBottom: 20,
+      opacity: 0.8
+   },
    button: {
       width: '80%',
       height: 50,

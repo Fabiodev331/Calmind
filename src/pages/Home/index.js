@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, Button, TouchableOpacity, FlatList } from "react-native";
 import { styles } from "./styles";
 
@@ -11,6 +11,10 @@ import { useNavigation } from "@react-navigation/native";
 export default function Home(){
    const {SignOut, user} = useContext(AuthContext);
    const navigation = useNavigation();
+
+   useEffect (() => {
+      return () => {}
+   }, [])
 
    const [posts, setPosts] = useState ([
       {id: 1, name: "Mente"},

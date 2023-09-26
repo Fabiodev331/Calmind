@@ -5,10 +5,12 @@ import {initializeApp} from 'firebase/app';
 import { firebaseConfig } from "../services/firebaseConnection";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
+import { collection, getDocs, setDoc, updateDoc, doc } from "firebase/firestore"; 
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getApp } from "firebase/app";
+import { getApp, getApps } from "firebase/app";
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext({});
 
@@ -17,10 +19,23 @@ export default function AuthProvider({ children }){
    const [loadingAuth, setLoadingAuth] = useState(false);
    const [loading, setLoading] = useState(true);
 
-   const app = initializeApp(firebaseConfig);
-   const auth = getAuth(app);
-   const db = getFirestore(app);
-   const firebaseApp = getApp();
+   if (!getApps().length) {
+      try {
+        app = initializeApp(firebaseConfig);
+        auth = initializeAuth(app, {
+          persistence: getReactNativePersistence(AsyncStorage),
+        });
+      } catch (error) {
+        console.log("Error initializing app: " + error);
+      }
+    } else {
+      app = getApp();
+      auth = getAuth(app);
+    }
+      const db = getFirestore(app);
+      const firebaseApp = getApp();
+    
+   
 
    useEffect(()=> {
       async function loadStorage(){
@@ -43,7 +58,7 @@ export default function AuthProvider({ children }){
          const uid = value.user.uid;
          //console.log('criada')
 
-         try {  await addDoc(collection(db, "users"), {
+         try {  await setDoc(doc(db, "users", uid), {
             uid: uid,
             name: name,
             email: email,
@@ -74,11 +89,11 @@ export default function AuthProvider({ children }){
          const user = value.user;
 
          const querySnapshot = await getDocs(collection(db, "users"));
-         querySnapshot.forEach((doc) => {
+         querySnapshot.forEach((respose) => {
             
-            if(doc.data().email === user.email ){
-               setUser(doc.data())
-               storageUser(doc.data())
+            if(respose.data().email === user.email ){
+               setUser(respose.data())
+               storageUser(respose.data())
             }
 
             setLoadingAuth(false);
@@ -107,6 +122,20 @@ export default function AuthProvider({ children }){
       console.log(storage)
    }
 
+   async function updateUser(name){
+      const docRef = doc(db, "users", user?.uid);
+      await updateDoc(docRef, {
+         name: name
+      })
+      let data = {
+         email: user.email,
+         name: name,
+         uid: user.uid,
+      }
+      setUser(data);
+      storageUser(data);
+   }
+
    return(
       <AuthContext.Provider 
       value={{ 
@@ -117,7 +146,8 @@ export default function AuthProvider({ children }){
          loadingAuth, 
          loading, 
          user,
-         handleFirebaseStorage
+         handleFirebaseStorage,
+         updateUser
       }}>
          {children}
       </AuthContext.Provider>

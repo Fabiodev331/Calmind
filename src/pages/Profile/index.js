@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import { View, Text, Button, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, Button, TextInput, TouchableOpacity, ActivityIndicator, Keyboard } from "react-native";
 import { styles } from "./styles";
 
 import { Feather } from "@expo/vector-icons";
@@ -7,7 +7,7 @@ import { AuthContext } from "../../contexts/auth";
 
 
 export default function Profile(){
-   const {SignOut, user} = useContext(AuthContext);
+   const {SignOut, user, updateUser} = useContext(AuthContext);
 
    const [name, setName] = useState(user.name);
    const [email, setEmail] = useState(user.email);
@@ -18,6 +18,15 @@ export default function Profile(){
 
    async function handleSignOut(){
       await SignOut();
+   }
+
+   async function handleUpdate(){
+      if(name === ''){
+         return;
+      }
+      Keyboard.dismiss()
+      await updateUser(name);
+      alert("Nome atualizado!")
    }
 
    return (
@@ -36,10 +45,10 @@ export default function Profile(){
             onChangeText={text => setEmail(text)}
             placeholder="Email"
             placeholderTextColor="#3B5368"
-            style={styles.input}
+            style={styles.inputEmail}
          />
 
-            <TouchableOpacity style={styles.button} onPress={handleSignOut}>
+            <TouchableOpacity style={styles.button} onPress={handleUpdate}>
                <Text style={styles.buttonText}>Atualizar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonOut} onPress={handleSignOut}>
