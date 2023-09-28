@@ -29,11 +29,11 @@ export default function Home(){
 
    function handleOn(){
       setVisible(!visible)
-      console.log('desativado')
+      //console.log('desativado')
    }
    function handleOff(){
       setVisible(!visible)
-      console.log('ativado')
+      //console.log('ativado')
    }
 
    return(

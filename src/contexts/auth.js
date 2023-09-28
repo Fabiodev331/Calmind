@@ -134,6 +134,7 @@ export default function AuthProvider({ children }){
       }
       setUser(data);
       storageUser(data);
+      
    }
 
    return(

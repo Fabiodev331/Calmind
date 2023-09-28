@@ -21,12 +21,14 @@ export default function Profile(){
    }
 
    async function handleUpdate(){
-      if(name === ''){
+      if(name === user.name){
          return;
+      }else{
+         Keyboard.dismiss()
+         await updateUser(name);
+         alert("Nome atualizado!")
       }
-      Keyboard.dismiss()
-      await updateUser(name);
-      alert("Nome atualizado!")
+      
    }
 
    return (
